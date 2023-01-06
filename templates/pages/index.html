@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/about.css' %}" />
+<link rel="stylesheet" href="{% static 'css/common.css' %}" />
+{% endblock mycss %}{% block content %}
+<!-- Showcase -->
+<section id="showcase">
+  <div class="container text-center">
+    <div class="home-search p-5">
+      <div class="overlay p-5">
+        <h1 class="display-4 mb-4">
+          CAVITE STATE UNIVERSITY OF SILANG CAMPUS<br />
+          Enrollment System {{current_year}}
+        </h1>
+        <p class="lead">Online Enrollment is now ongoing!</p>
+        <div class="search">
+          <a class="btn btn-secondary mt-4" href="enrollment">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Alerts-->
+{% include 'partials/_alerts.html' %}
+
+{% include 'partials/_about.html' %}
+{% include 'partials/_modals.html' %} {% endblock %}

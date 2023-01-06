@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'system'
 ]
 
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'kidslearning.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,8 +130,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'  # this is the name of the url
+
+LOGOUT_REDIRECT_URL = '/'
 
 # login details danielc / ofhNrp21f5bkj3xj
 

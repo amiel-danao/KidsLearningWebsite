@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% load static %} {% block mycss %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/common.css' %}" />
+{% endblock mycss %} {% load crispy_forms_tags %} {% block content %}
+<section id="register" class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4><i class="fas fa-sign-in-alt"></i> Register</h4>
+          </div>
+          <div class="card-body" id="registerForm">
+            <form method="POST">
+              {% csrf_token %} {{ register_form|crispy }}
+              <div class="col text-center">
+                <button class="btn btn-primary" type="submit">Register</button>
+              </div>
+              <p class="text-center">
+                If you already have an account,
+                <a href="/accounts/login">login</a> instead.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
