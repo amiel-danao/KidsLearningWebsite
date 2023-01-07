@@ -3,7 +3,7 @@
 }
 
 img {
-  width: 100%;
+  width: 20%;
 }
 
 .logo {
@@ -216,18 +216,22 @@ h6 {
   background-color: green !important;
 }
 
-#loginForm {
+#loginForm, #registerForm {
   background: linear-gradient(to bottom, #036fed 0, #004fa9 100%);
 }
 
 
-#loginForm label {
+#loginForm label, #registerForm label {
   color: white !important;
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-#loginForm input {
+#registerForm li, #registerForm p{
+  color: white !important;
+}
+
+#loginForm input, #registerForm input {
   width: 100%;
   height: 50px;
   font-size: 120% !important;
@@ -245,4 +249,10 @@ body {
 
 .tomato {
   background-color: tomato;
+}
+
+.cartoon-guy{
+  position: absolute;
+  bottom: 0;
+  right: -10%;
 }

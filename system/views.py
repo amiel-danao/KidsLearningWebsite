@@ -1,15 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from system.forms import NewUserForm
 from django.contrib import messages
 
-
+@login_required
 def index(request):
     if request.user is None or request.user.is_authenticated is False:
-        return redirect('/accounts/login')
+        return redirect('/accounts/login/')
     context = {}
-    return render(request, 'enrollment/enrollment.html', context)
+    return render(request, 'index.html', context)
 
 
 def register_request(request):
@@ -18,7 +19,7 @@ def register_request(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("index")
+            return redirect("system:index")
         messages.error(
             request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()

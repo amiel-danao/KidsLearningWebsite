@@ -10,15 +10,17 @@
             <h4><i class="fas fa-sign-in-alt"></i> Register</h4>
           </div>
           <div class="card-body" id="registerForm">
+            <img class="cartoon-guy" src="{% static 'img/cartoon-guy2.png' %}">
             <form method="POST">
               {% csrf_token %} {{ register_form|crispy }}
               <div class="col text-center">
-                <button class="btn btn-primary" type="submit">Register</button>
+                <button class="btn btn-success btn-block mt-3 tomato" type="submit">Register</button>
               </div>
-              <p class="text-center">
-                If you already have an account,
-                <a href="/accounts/login">login</a> instead.
-              </p>
+
+              <p class="text-center text-white h3">
+                If you already have an account,<br>
+                <a class="btn btn-lg" style="background-color:lime;" href="{% url 'login'%}">login</a> instead.
+              </p> 
             </form>
           </div>
         </div>
