@@ -13,7 +13,7 @@
             <div class="accordion-body text-center">
               <iframe width="560" height="315" src="https://www.youtube.com/embed/EOX784OXmPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               <br>
-              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=1" class="btn btn-primary tomato">Play</a> button</p>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=1&user={{request.user.id}}" class="btn btn-primary tomato">Play</a> button</p>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="accordion-body text-center">
               <iframe width="560" height="315" src="https://www.youtube.com/embed/VTXG2oG8wcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               <br>
-              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=2" class="btn btn-primary tomato">Play</a> button</p>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=2&user={{request.user.id}}" class="btn btn-primary tomato">Play</a> button</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/7J1OkxuyLD0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               </div>
               <br>
-              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=3" class="btn btn-primary tomato">Play</a> button</p>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=3&user={{request.user.id}}" class="btn btn-primary tomato">Play</a> button</p>
             </div>
           </div>
         </div>
