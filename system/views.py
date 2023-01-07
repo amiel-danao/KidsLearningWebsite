@@ -18,6 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django.db.models import Max
+from django.contrib.auth.views import LoginView
 
 
 @login_required
@@ -29,6 +30,17 @@ def index(request):
 def play(request):
     context = {}
     return render(request, 'index.html', context)
+
+class MyLoginView(LoginView):
+    # form_class=LoginForm
+    redirect_authenticated_user=True
+    template_name='registration/login.html'
+
+    def get_success_url(self):
+        # write your logic here
+        if self.request.user.is_superuser:
+            return '/progress/'
+        return '/'
 
 
 def register_request(request):
@@ -52,22 +64,6 @@ class ScoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retr
     serializer_class = ScoreSerializer
 
 
-# class ScoreListView(LoginRequiredMixin, SingleTableView):
-#     model = Score
-#     filterset_class = ScoreFilter
-
-#     table_class = ScoreTable
-#     template_name = 'pages/progress.html'
-#     # filterset_class = OrderServiceFilter
-#     per_page = 8
-
-#     def get_table_data(self):
-#         user = self.request.GET.get('user', None)
-#         if user is None:
-#             return Score.objects.all()
-#         else:
-#             return Score.objects.filter(user=self.request.GET)
-
 class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView, FilterView):
     model = Score
     table_class = ScoreTable
@@ -82,7 +78,7 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
         qs = super().get_queryset()
 
         user = self.request.GET.get('user', None)
-        if user is None:
+        if user is None or len(user) == 0:
             return qs
         else:
             return qs.filter(user=user)
@@ -97,15 +93,19 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
         RequestConfig(self.request, paginate={"per_page": 10}).configure(table)
         context['table'] = table
 
-        session_no = self.request.GET.get('session_no', 1)
+        session_no = self.request.GET.get('session_no', "")
+        if len(session_no) == 0:
+            session_no = 1
         context['session_progress_lesson1'] = get_progress(user, session_no, MAX_LESSON1_LEVELS, 'Learn ABC')
         context['session_progress_lesson2'] = get_progress(user, session_no, MAX_LESSON2_LEVELS, 'Spelling')
         context['session_progress_lesson3'] = get_progress(user, session_no, MAX_LESSON3_LEVELS, 'Math')
 
-
-        max = Score.objects.filter(user=user).aggregate(Max('session_no'))
-        if user is None:
+        max = 1
+        
+        if user is None or len(user) == 0:
             max = Score.objects.all().aggregate(Max('session_no'))
+        else:
+            max = Score.objects.filter(user=user).aggregate(Max('session_no'))
         context['max_sessions'] = range(max['session_no__max'])
 
         return context

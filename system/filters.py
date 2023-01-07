@@ -13,6 +13,7 @@ class ScoreFilter(django_filters.FilterSet):
     score_less_than = django_filters.CharFilter(field_name='score', lookup_expr='lt')
     score_greater_than = django_filters.CharFilter(field_name='score', lookup_expr='gt')
     lesson_name = django_filters.CharFilter(lookup_expr='icontains')
+    session_no = django_filters.NumberFilter(label="Session No.")
 
     class Meta:
         model = Score

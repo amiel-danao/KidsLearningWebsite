@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %} 
 
 {% load render_table from django_tables2 %}
-{% load bootstrap4 %}
+{% load django_bootstrap5 %}
 {% bootstrap_css %}
 
 {% block mycss %} 
@@ -12,6 +12,11 @@
 .progress-bar{
     color:black;
     font-weight: bold;
+}
+#session_select{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
 }
 </style>
 {% endblock mycss %}
@@ -79,7 +84,7 @@
                                 <span class="input-group-text">Session No.</span>
                                 <select name="session_no" class="form-select" id="session_select">
                                 {% for i in max_sessions %}
-                                    <option value="{{ forloop.counter }}" aria-describedby="basic-addon1" {% if forloop.counter == request.GET.session_no %}selected{% endif %}>{{ forloop.counter }}</option>
+                                    <option value="{{ forloop.counter }}" aria-describedby="basic-addon1">{{ forloop.counter }}</option>
                                 {% endfor %}
                                 </select>
                                 <span class="input-group-text" id="basic-addon1"><button class="btn btn-primary d-inline" type="submit">filter</button></span>
@@ -117,7 +122,7 @@
                             </div>
                             <div class="modal-body">
                                 
-                                    {% bootstrap_form filter.form layout='inline' %}
+                                    {% bootstrap_form filter.form  %}
                                 
                             </div>
                             <input name="per_page" value="{{ request.GET.per_page }}" hidden>
@@ -146,8 +151,19 @@
 {% if request.GET.user %}
 <script type="text/javascript">
 
-// $(document).ready(function() {
-    // const bsTab = new bootstrap.Tab('#myTab')
+$(document).ready(function() {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has('session_no')) {
+        let session_no = params.get('session_no');
+        if (!session_no){
+            session_no = 1;
+        }
+        console.log(`session_no: ${session_no}`);
+        $(`#session_select option[value="${session_no}"]`).attr('selected', true);
+    }
+});
+    
 
     var active_tab = sessionStorage.getItem("active_tab");
     
@@ -165,7 +181,7 @@
         sessionStorage.setItem("active_tab", $(this).attr('id'));
     });
      // your code here
-// });
+
 
 </script>
 {% endif %}

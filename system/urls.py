@@ -2,10 +2,6 @@ from django.urls import path
 
 from system.filters import ScoreFilter
 from . import views
-from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-)
 
 app_name = 'system'
 
