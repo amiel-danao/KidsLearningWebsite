@@ -1,0 +1,172 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+
+{% block mycss %} 
+<style>
+.nav-tabs .nav-link {
+    background-color:darkgrey;
+}
+.progress-bar{
+    color:black;
+    font-weight: bold;
+}
+</style>
+{% endblock mycss %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" id="myTab">
+    {% if request.GET.user %}
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-progress-tab" data-bs-toggle="pill" data-bs-target="#pills-progress" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><h1 class="title text-black">Progress Tracking </h1></button>
+      </li>
+    </li>
+    {% endif %}
+    <li class="nav-item" role="presentation">
+        <button class="nav-link {% if not request.GET.user %} active{% endif %}" id="pills-scores-tab" data-bs-toggle="pill" data-bs-target="#pills-scores" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><h1 class="title text-black">Scores </h1></button>
+    </li>
+</ul>
+
+
+
+
+<div class="container bg-white">
+
+    <div class="tab-content" id="pills-tabContent">
+
+        {% if request.GET.user %}
+        <div class="row tab-pane fade show active" id="pills-progress" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+            
+            <div class="col p-5">
+                <div class="row mb-2">
+                    {% if request.GET.user %}
+                    <h3 class="text-black">{{ request.user }}</h3>
+                    {% endif %}
+                </div>
+                <div class="row mb-4">
+                    <div class="col-2">Learn ABC</div>
+                    <div class="progress col">
+                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="{{session_progress_lesson1}}" aria-valuemin="0" aria-valuemax="100" style="width: {{session_progress_lesson1}}%">
+                        {{session_progress_lesson1}}%
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-2">Spelling</div>
+                    <div class="progress col">
+                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="{{session_progress_lesson2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{session_progress_lesson2}}%">
+                        {{session_progress_lesson2}}%
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-2">Math</div>
+                    <div class="progress col">
+                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" aria-label="Animated striped example" aria-valuenow="{{session_progress_lesson3}}" aria-valuemin="0" aria-valuemax="100" style="width: {{session_progress_lesson3}}%">
+                        {{session_progress_lesson3}}%
+                        </div>
+                    </div>
+                </div>
+                {% if max_sessions %}
+                <div class="row">
+                    <div class="col-4">
+                        <form class="form" method="get">
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Session No.</span>
+                                <select name="session_no" class="form-select" id="session_select">
+                                {% for i in max_sessions %}
+                                    <option value="{{ forloop.counter }}" aria-describedby="basic-addon1" {% if forloop.counter == request.GET.session_no %}selected{% endif %}>{{ forloop.counter }}</option>
+                                {% endfor %}
+                                </select>
+                                <span class="input-group-text" id="basic-addon1"><button class="btn btn-primary d-inline" type="submit">filter</button></span>
+                            </div>
+                            
+                            <input name="per_page" value="{{ request.GET.per_page }}" hidden>
+                            <input name="user" value="{{ request.GET.user }}" hidden>
+                            
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        {% endif %}
+
+        <div class="row tab-pane fade {% if not request.GET.user %}show active{% endif %} " id="pills-scores" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+
+            
+            
+            {% if filter %}
+            <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Filter <i class="bi bi-search"></i>
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form action="" method="get" class="form form-inline mb-2">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Search</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                    {% bootstrap_form filter.form layout='inline' %}
+                                
+                            </div>
+                            <input name="per_page" value="{{ request.GET.per_page }}" hidden>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+                
+            {% endif %}
+            {% render_table table %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block myjs %}
+
+{% if request.GET.user %}
+<script type="text/javascript">
+
+// $(document).ready(function() {
+    // const bsTab = new bootstrap.Tab('#myTab')
+
+    var active_tab = sessionStorage.getItem("active_tab");
+    
+    if (!active_tab){
+        active_tab = 'pills-progress-tab';
+    }
+    console.log(active_tab);
+
+    let triggerEl = document.getElementById(active_tab);
+    if (triggerEl != null){
+        bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+    }
+
+    $('.nav-link').on('click', function(){
+        sessionStorage.setItem("active_tab", $(this).attr('id'));
+    });
+     // your code here
+// });
+
+</script>
+{% endif %}
+{% endblock myjs %}

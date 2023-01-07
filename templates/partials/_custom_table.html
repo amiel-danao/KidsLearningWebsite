@@ -1,0 +1,16 @@
+{% extends "django_tables2/bootstrap5.html" %}
+
+{% block table.tfoot %}
+<!-- <tfoot>
+    <tr>
+        <td colspan="3">three column spanning footer</td>
+    </tr>
+</tfoot>     -->
+<tfoot {{ table.attrs.tfoot.as_html }}>
+    <tr>
+    {% for column in table.columns %}
+        <td {{ column.attrs.tf.as_html }}>{{ column.footer }}</td>
+    {% endfor %}
+    </tr>
+</tfoot>
+{% endblock %}

@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
+from kidslearning.context_processors import MAX_LESSON1_LEVELS, MAX_LESSON2_LEVELS, MAX_LESSON3_LEVELS
 from kidslearning.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Max
+import os
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
@@ -29,10 +32,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = "User"
 
 
-def gen_session_no() -> int:
+def gen_session_no(lesson_name=None, user=None) -> int:
     today = timezone.now()
-    count = Score.objects.filter(date = today.replace(hour=0,minute=0,second=0)).count()
-    return count + 1
+
+    if lesson_name is not None and user is not None:
+        filter = Score.objects.filter(user=user, lesson_name=lesson_name)
+        max = filter.aggregate(Max('session_no'))
+        maximum = max['session_no__max']
+        count = filter.count()
+        if lesson_name == 'Learn ABC':
+            if count >= int(os.getenv(MAX_LESSON1_LEVELS)):
+                return maximum + 1
+        elif lesson_name == 'Spelling':
+            if count >= int(os.getenv(MAX_LESSON2_LEVELS)):
+                return maximum + 1
+        else:
+            if count >= int(os.getenv(MAX_LESSON3_LEVELS)):
+                return maximum + 1
+    return 1
 
     
 class Score(models.Model):
@@ -50,3 +67,7 @@ class Score(models.Model):
 
     def summarize(self):
         return f"Date: {self.date}, Lesson Name: {self.lesson_name}, Score: {self.score}, Time: {self.time}, Session No. {self.session_no}, Summary: {self.summary}"
+
+    def save(self, *args, **kwargs):
+        self.session_no = gen_session_no(self.lesson_name, self.user)
+        super().save(*args, **kwargs)  # Call the "real" save() method.
