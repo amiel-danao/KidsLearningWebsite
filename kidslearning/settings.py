@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'cvsukidslearning.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
-    'system'
+    'system',
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +155,6 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "system.CustomUser"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]

@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% load static %} 
+
+    {% block content %}
+    <div class="container-fluid bg-white">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h3>Learn ABC</h3>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body text-center">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/EOX784OXmPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <br>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=1" class="btn btn-primary tomato">Play</a> button</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <h3>Spelling</h3>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body text-center">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/VTXG2oG8wcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <br>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=2" class="btn btn-primary tomato">Play</a> button</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <h3>Math</h3>
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body text-center">
+              <div class="row mb-5">
+                <h4>Math 1</h4>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/qS-Q9C04bno" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+              <div class="row mb-5">
+                <h4>Math 2</h4>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/JtsEqJZreIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+              <div class="row mb-5">
+                <h4>Math 3</h4>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/7J1OkxuyLD0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+              <br>
+              <p class="text-black">After watching the video, click the <a href="{% url 'system:play' %}?lesson=3" class="btn btn-primary tomato">Play</a> button</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}

@@ -3,14 +3,21 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
 from system import views
+from rest_framework import routers, serializers, viewsets
+
 from django.contrib.auth.views import (
     LoginView,
     LogoutView,
 )
 
+router = routers.DefaultRouter()
+router.register(r'scores', views.ScoreViewSet)
+
+
 
 urlpatterns = [
     path('', include('system.urls', namespace='system')),
+    path('api/', include((router.urls, 'app_name'), namespace='instance_name')),
     path('admin/', admin.site.urls),
     
     path(

@@ -256,3 +256,15 @@ body {
   bottom: 0;
   right: -10%;
 }
+
+#accordionExample h3{
+  color:white;
+}
+
+#accordionExample h4{
+  color:black;
+}
+
+.accordion-button{
+  background: linear-gradient(to bottom, #036fed 0, #004fa9 100%);
+}
