@@ -94,10 +94,10 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": "kidslearning$kidslearning_database",
-            "USER": "kidslearning",
+            "NAME": "cvsukidslearning$kidslearning_database",
+            "USER": "cvsukidslearning",
             "PASSWORD": "notCommonPassword1234",
-            "HOST": "kidslearning.mysql.pythonanywhere-services.com",
+            "HOST": "cvsukidslearning.mysql.pythonanywhere-services.com",
             "PORT": "3306",
         }
     }
