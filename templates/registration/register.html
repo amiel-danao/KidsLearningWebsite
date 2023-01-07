@@ -12,6 +12,12 @@
           <div class="card-body" id="registerForm">
             <img class="cartoon-guy" src="{% static 'img/cartoon-guy2.png' %}">
             <form method="POST">
+              <div id='form-errors'>{{ form_errors }}</div>
+              <!-- <div class="form-group bg-white">
+                {% for error in form_errors %}
+                <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+              </div> -->
               {% csrf_token %} {{ register_form|crispy }}
               <div class="col text-center">
                 <button class="btn btn-success btn-block mt-3 tomato" type="submit">Register</button>
