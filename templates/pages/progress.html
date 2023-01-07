@@ -18,6 +18,13 @@
     text-align: center;
     font-size: 1.5rem;
 }
+thead{
+    background-color: #212529 !important;
+}
+
+thead a{
+    color: cyan !important;
+}
 </style>
 {% endblock mycss %}
 
@@ -105,38 +112,57 @@
         <div class="row tab-pane fade {% if not request.GET.user %}show active{% endif %} " id="pills-scores" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
 
             
-            
-            {% if filter %}
-            <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Filter <i class="bi bi-search"></i>
-            </button>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <form action="" method="get" class="form form-inline mb-2">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Search</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                
-                                    {% bootstrap_form filter.form  %}
-                                
-                            </div>
-                            <input name="per_page" value="{{ request.GET.per_page }}" hidden>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button>
-                            </div>
+            <div class="col">
+
+                <div class="row pt-4">
+                    {% if filter %}
+                    <div class="input-group mb-3">
+                            <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Filter <i class="bi bi-search"></i>
+                            </button>
+                            <a href="{% url 'system:progress' %}" class="btn btn-primary mb-1">
+                                Show All</i>
+                            </a>
+                      </div>
+                    <!-- <div class="col-1">
+                        
+                    </div>
+                    <div class="col-1">
+                        
+                    </div> -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="" method="get" class="form form-inline mb-2">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Search</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                            {% bootstrap_form filter.form  %}
+                                        
+                                    </div>
+                                    <input name="per_page" value="{{ request.GET.per_page }}" hidden>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Filter <i class="bi bi-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
+
+                        
+                    {% endif %}
+                </div>
+                
+                
+                <div class="row">
+                    {% render_table table %}
                 </div>
             </div>
-
-                
-            {% endif %}
-            {% render_table table %}
 
         </div>
 

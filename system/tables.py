@@ -21,7 +21,7 @@ class ScoreTable(tables.Table):
         template_name = "partials/_custom_table.html"
         empty_text = _("No Progress Data")
         fields = ('user', 'date', 'lesson_name', 'score', 'time', 'session_no', 'summary')
-        attrs = {'class': 'table table-hover table-light table-bordered'}
+        attrs = {'class': 'table table-hover table-bordered'}
         
     def render_user(self, value, record):
         url = format_html('<a href="{}?user={}" >{}</a>', reverse('system:progress'), record.user.pk, value)
