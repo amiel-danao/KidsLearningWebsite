@@ -20,6 +20,10 @@ from django_filters.views import FilterView
 from django.db.models import Max
 from django.contrib.auth.views import LoginView
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 @login_required
 def index(request):

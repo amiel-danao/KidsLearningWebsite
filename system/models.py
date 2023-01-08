@@ -6,6 +6,10 @@ from kidslearning.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
@@ -41,13 +45,13 @@ def gen_session_no(lesson_name=None, user=None) -> int:
         maximum = max['session_no__max']
         count = filter.count()
         if lesson_name == 'Learn ABC':
-            if count >= int(os.getenv(MAX_LESSON1_LEVELS)):
+            if count >= int(os.getenv(MAX_LESSON1_LEVELS, "6")):
                 return maximum + 1
         elif lesson_name == 'Spelling':
-            if count >= int(os.getenv(MAX_LESSON2_LEVELS)):
+            if count >= int(os.getenv(MAX_LESSON2_LEVELS, "7")):
                 return maximum + 1
         else:
-            if count >= int(os.getenv(MAX_LESSON3_LEVELS)):
+            if count >= int(os.getenv(MAX_LESSON3_LEVELS, "2")):
                 return maximum + 1
     return 1
 
