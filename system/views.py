@@ -106,7 +106,11 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
             max = Score.objects.all().aggregate(Max('session_no'))
         else:
             max = Score.objects.filter(user=user).aggregate(Max('session_no'))
-        context['max_sessions'] = range(max['session_no__max'])
+        if not 'session_no__max' in max:
+            max = 1
+        else:
+            max['session_no__max']
+        context['max_sessions'] = range(max)
 
         return context
 
