@@ -100,17 +100,17 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
         context['session_progress_lesson2'] = get_progress(user, session_no, MAX_LESSON2_LEVELS, 'Spelling')
         context['session_progress_lesson3'] = get_progress(user, session_no, MAX_LESSON3_LEVELS, 'Math')
 
-        max = 1
+        max_sessions = 1
         
         if user is None or len(user) == 0:
             max = Score.objects.all().aggregate(Max('session_no'))
         else:
             max = Score.objects.filter(user=user).aggregate(Max('session_no'))
-        if not 'session_no__max' in max:
-            max = 1
+        if not 'session_no__max' in max or max['session_no__max'] is None:
+            max_sessions = 1
         else:
-            max = max['session_no__max']
-        context['max_sessions'] = range(max)
+            max_sessions = max['session_no__max']
+        context['max_sessions'] = range(max_sessions)
 
         return context
 
