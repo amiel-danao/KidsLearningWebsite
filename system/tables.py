@@ -3,16 +3,22 @@ from system.models import Score
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from django.urls import reverse
+import datetime
 
 class SummingColumn(tables.Column):
     def render_footer(self, bound_column, table):
         return f"Total: {sum(bound_column.accessor.resolve(row) for row in table.data)}"
 
+class SummingTimeColumn(tables.Column):
+    def render_footer(self, bound_column, table):
+        return f"Total: {str(datetime.timedelta(seconds=sum(bound_column.accessor.resolve(row) for row in table.data)))}"
+
+
 
 class ScoreTable(tables.Table):
     # total = tables.Column(footer=total_footer)
     score = SummingColumn()
-    time = SummingColumn()
+    time = SummingTimeColumn()
 
     class Meta:
         orderable = False
@@ -26,3 +32,7 @@ class ScoreTable(tables.Table):
     def render_user(self, value, record):
         url = format_html('<a href="{}?user={}" >{}</a>', reverse('system:progress'), record.user.pk, value)
         return url
+
+    def render_time(self, value, record):
+        formatted_seconds = str(datetime.timedelta(seconds=value))
+        return formatted_seconds

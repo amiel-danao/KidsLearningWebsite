@@ -9,19 +9,32 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto">
         <li {% if '/' == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
           <a class="nav-link" href="{% url 'system:index' %}"><h5>Kids Learning</h5></a>
         </li>
+
+        {% if request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'system:progress' %}">Progress</a>
+        </li>
+        {% endif %}
       </ul>
+
+      {% if user.is_authenticated %}          
+      <span class="navbar-text">
+        {{ user.email }}
+        <a href="{% url 'logout' %}" style="color:red">Log Out</a>
+      </span>
+      {% endif %}
       <ul class="navbar-nav ml-auto">
 
-        {% if user.is_authenticated %}          
+        <!-- {% if user.is_authenticated %}          
           <li class="nav-item active mr-3 text-white">
             {{ user.email }}
             <a href="{% url 'logout' %}" style="color:red">Log Out</a>
           </li>
-        {% endif %}
+        {% endif %} -->
 
       </ul>
     </div>
