@@ -21,7 +21,7 @@
         {% endif %}
       </ul>
 
-      {% if user.is_authenticated %}          
+      {% if request.user.is_authenticated %}          
       <span class="navbar-text">
         {{ user.email }}
         <a href="{% url 'logout' %}" style="color:red">Log Out</a>

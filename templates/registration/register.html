@@ -1,5 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block mycss %} {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+<style>
+  .form-text{
+    color:white !important;
+  }
+</style>
 {% endblock mycss %} {% load crispy_forms_tags %} {% block content %}
 <section id="register" class="bg-light py-5">
   <div class="container">
