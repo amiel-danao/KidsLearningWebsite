@@ -11,7 +11,8 @@ class SummingColumn(tables.Column):
 
 class SummingTimeColumn(tables.Column):
     def render_footer(self, bound_column, table):
-        return f"Total: {str(datetime.timedelta(seconds=sum(bound_column.accessor.resolve(row) for row in table.data)))}"
+        time = str(datetime.timedelta(seconds=sum(bound_column.accessor.resolve(row) for row in table.data))).split(".")[0]
+        return f"Total: {time}"
 
 
 
@@ -34,5 +35,5 @@ class ScoreTable(tables.Table):
         return url
 
     def render_time(self, value, record):
-        formatted_seconds = str(datetime.timedelta(seconds=value))
+        formatted_seconds = str(datetime.timedelta(seconds=value)).split(".")[0]
         return formatted_seconds

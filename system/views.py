@@ -33,6 +33,8 @@ def index(request):
 @login_required
 def play(request):
     context = {}
+    if str(request.user.pk) != request.GET.get('user', None):
+        return HttpResponse('Unauthorized', status=401)
     return render(request, 'index.html', context)
 
 class MyLoginView(LoginView):
