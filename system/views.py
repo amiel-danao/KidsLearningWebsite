@@ -85,9 +85,9 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
 
         user = self.request.GET.get('user', None)
         if user is None or len(user) == 0:
-            return qs
+            return qs.order_by('date').reverse()
         else:
-            return qs.filter(user=user)
+            return qs.filter(user=user).order_by('date').reverse()
 
     def get_context_data(self, **kwargs):
         context = super(ScoreListView, self).get_context_data(**kwargs)

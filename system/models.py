@@ -45,13 +45,13 @@ def gen_session_no(lesson_name=None, user=None) -> int:
         maximum = max['session_no__max']
         count = filter.count()
         if lesson_name == 'Learn ABC':
-            if count >= int(os.getenv(MAX_LESSON1_LEVELS, "6")):
+            if count > int(os.getenv(MAX_LESSON1_LEVELS, "6")):
                 return maximum + 1
         elif lesson_name == 'Spelling':
-            if count >= int(os.getenv(MAX_LESSON2_LEVELS, "7")):
+            if count > int(os.getenv(MAX_LESSON2_LEVELS, "7")):
                 return maximum + 1
         else:
-            if count >= int(os.getenv(MAX_LESSON3_LEVELS, "2")):
+            if count > int(os.getenv(MAX_LESSON3_LEVELS, "2")):
                 return maximum + 1
     return 1
 
