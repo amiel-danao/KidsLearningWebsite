@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-from kidslearning.context_processors import MAX_LESSON1_LEVELS, MAX_LESSON2_LEVELS, MAX_LESSON3_LEVELS
+from kidslearning.settings import MAX_LESSON1_LEVELS_ENV, MAX_LESSON2_LEVELS_ENV, MAX_LESSON3_LEVELS_ENV
 from system.forms import NewUserForm
 from django.contrib import messages
 from rest_framework import viewsets, mixins, generics
@@ -125,9 +125,9 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
         session_no = self.request.GET.get('session_no', "")
         if len(session_no) == 0:
             session_no = 1
-        context['session_progress_lesson1'] = get_progress(user, session_no, MAX_LESSON1_LEVELS, 'Learn ABC')
-        context['session_progress_lesson2'] = get_progress(user, session_no, MAX_LESSON2_LEVELS, 'Spelling')
-        context['session_progress_lesson3'] = get_progress(user, session_no, MAX_LESSON3_LEVELS, 'Math')
+        context['session_progress_lesson1'] = get_progress(user, session_no, MAX_LESSON1_LEVELS_ENV, 'Learn ABC')
+        context['session_progress_lesson2'] = get_progress(user, session_no, MAX_LESSON2_LEVELS_ENV, 'Spelling')
+        context['session_progress_lesson3'] = get_progress(user, session_no, MAX_LESSON3_LEVELS_ENV, 'Math')
 
         max_sessions = 1
         
@@ -144,12 +144,12 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
 
         return context
 
-def get_progress(user, session_no, lesson_max_name, lesson_name):
+def get_progress(user, session_no, lesson_max, lesson_name):
     if user is None:
         return 0
     progress = 0
     try:
-        max = int(os.getenv(lesson_max_name))
+        max = lesson_max
         current = Score.objects.filter(user=user, session_no=session_no, lesson_name=lesson_name).count()
         
         progress = (current / max) * 100
