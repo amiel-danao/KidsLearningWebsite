@@ -156,4 +156,4 @@ def get_progress(user, session_no, lesson_max, lesson_name):
     except Exception:
         pass
 
-    return round(progress, 2)
+    return round(min(progress, 100), 2)
