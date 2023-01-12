@@ -8,16 +8,16 @@ admin.site.unregister((Group, Theme))
 exempted_models = (Group, Theme)
 
 
-# @admin.register(Score)
-# class ScoreAdmin(admin.ModelAdmin):
+@admin.register(Score)
+class ScoreAdmin(admin.ModelAdmin):
 
-#     list_filter = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-#     readonly_fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-#     fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-#     list_display = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+    list_filter = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+    readonly_fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+    fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+    list_display = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
 
-#     def has_add_permission(self, request):
-#         return False
+    def has_add_permission(self, request):
+        return False
 
 @admin.register(Download)
 class DownloadAdmin(admin.ModelAdmin):
