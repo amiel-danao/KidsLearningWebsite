@@ -149,8 +149,8 @@ def get_progress(user, session_no, lesson_max, lesson_name):
         return 0
     progress = 0
     try:
-        max = lesson_max
-        current = Score.objects.filter(user=user, session_no=session_no, lesson_name=lesson_name).count()
+        max = int(lesson_max)
+        current = Score.objects.filter(user__id=user, session_no=session_no, lesson_name=lesson_name).count()
         
         progress = (current / max) * 100
     except Exception:
