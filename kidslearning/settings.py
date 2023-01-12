@@ -12,7 +12,18 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 import mimetypes
+from os.path import join, dirname
+from dotenv import load_dotenv
+from kidslearning.context_processors import MAX_LESSON1_LEVELS, MAX_LESSON2_LEVELS, MAX_LESSON3_LEVELS
+
 mimetypes.add_type("text/css", ".css", True)
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MAX_LESSON1_LEVELS_ENV = os.getenv(MAX_LESSON1_LEVELS, "6")
+MAX_LESSON2_LEVELS_ENV = os.getenv(MAX_LESSON2_LEVELS, "7")
+MAX_LESSON3_LEVELS_ENV = os.getenv(MAX_LESSON3_LEVELS, "2")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
