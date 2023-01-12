@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from system.models import Score
+from system.models import Announcement, Score
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from django.urls import reverse
@@ -14,7 +14,9 @@ class SummingTimeColumn(tables.Column):
         time = str(datetime.timedelta(seconds=sum(bound_column.accessor.resolve(row) for row in table.data))).split(".")[0]
         return f"Total: {time}"
 
-
+class AnnouncementTable(tables.Table):
+    class Meta:
+        model = Announcement
 
 class ScoreTable(tables.Table):
     # total = tables.Column(footer=total_footer)

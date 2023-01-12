@@ -55,6 +55,27 @@ def gen_session_no(lesson_name=None, user=None) -> int:
                 return maximum + 1
     return 1
 
+class Announcement(models.Model):
+    title = models.CharField(max_length=255, blank=False, default='')
+    description = models.CharField(max_length=255, blank=True)
+    content = models.CharField(max_length=2048)
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True)
+    date_valid = models.DateField(default=timezone.now)
+    active = models.BooleanField(default=True)
+    posted = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+class Download(models.Model):
+    title = models.CharField(max_length=255, blank=False, default='')
+    description = models.CharField(max_length=255)
+    file = models.FileField(upload_to='files/')
+    date = models.DateField(default=timezone.now)
+    downloadable = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
     
 class Score(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

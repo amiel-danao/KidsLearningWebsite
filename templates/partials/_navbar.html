@@ -16,9 +16,18 @@
 
         {% if request.user.is_superuser %}
         <li class="nav-item">
+          <a class="nav-link" target="_blank" href="{% url 'admin:index' %}">Admin</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'system:progress' %}">Progress</a>
         </li>
         {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'system:announcements' %}">Announcements</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'system:downloads' %}">Downloads</a>
+        </li>
       </ul>
 
       {% if request.user.is_authenticated %}          

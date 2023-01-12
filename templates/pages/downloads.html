@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load static %} 
+
+    {% block content %}
+    <h1>Downloads</h1>
+    <div class="container-fluid bg-white">
+        <div class="row p-5">
+        {% for item in download_list %}
+            <a target="_blank" href="{{item.file.url}}" type="button" class="btn btn-outline-success btn-lg">
+                {{item.title}}
+                <br>
+                {{item.description}}
+                <br>
+                <small>{{item.date}}</small>
+                <br>
+                <i class="bi bi-file-earmark-arrow-down-fill"></i> 
+                Download</a>
+        {% endfor %}
+        </div>
+        
+    </div>
+    {% endblock %}

@@ -1,22 +1,57 @@
 from django.contrib import admin
-from system.models import CustomUser, Score
+from system.models import Announcement, CustomUser, Download, Score
 from django.contrib.auth.models import Group
 from django_reverse_admin import ReverseModelAdmin
+from admin_interface.models import Theme
 
-admin.site.unregister(Group)
-exempted_models = (Group, )
+admin.site.unregister((Group, Theme))
+exempted_models = (Group, Theme)
 
 
-@admin.register(Score)
-class ScoreAdmin(admin.ModelAdmin):
+# @admin.register(Score)
+# class ScoreAdmin(admin.ModelAdmin):
 
-    list_filter = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-    readonly_fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-    fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
-    list_display = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+#     list_filter = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+#     readonly_fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+#     fields = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
+#     list_display = ('user', 'date', 'session_no', 'score', 'lesson_name', 'summary')
 
-    def has_add_permission(self, request):
-        return False
+#     def has_add_permission(self, request):
+#         return False
+
+@admin.register(Download)
+class DownloadAdmin(admin.ModelAdmin):
+    fields = ('title',
+    'description',
+    'file',
+    'date',
+    'downloadable')
+
+    list_filter = ('title', 'downloadable')
+
+    list_display = ('title',
+    'description',
+    'file',
+    'downloadable')
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    fields = ('title',
+    'description',
+    'content',
+    'thumbnail',
+    'date_valid',
+    'active')
+
+    list_filter = ('date_valid', 'active')
+
+    list_display = ('title',
+    'description',
+    'content',
+    'thumbnail',
+    'date_valid',
+    'active')
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):

@@ -1,4 +1,5 @@
 import os
+from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -8,11 +9,11 @@ from system.forms import NewUserForm
 from django.contrib import messages
 from rest_framework import viewsets, mixins, generics
 from system.mixins import SuperuserRequiredMixin
-from system.models import CustomUser, Score
+from system.models import Announcement, CustomUser, Download, Score
 from system.serializers import ScoreSerializer
 from django.views.generic import ListView
 from django_tables2.config import RequestConfig
-from system.tables import ScoreTable
+from system.tables import AnnouncementTable, ScoreTable
 from .filters import ScoreFilter
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView
@@ -70,6 +71,28 @@ class ScoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retr
     serializer_class = ScoreSerializer
 
 
+class AnnouncementListView(SingleTableView):
+    model = Announcement
+    context_object_name = 'announcement_list'
+    template_name = 'pages/announcements.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        now = timezone.now()
+        return qs.filter(active=True, date_valid__gt=now)
+
+
+class DownloadListView(SingleTableView):
+    model = Download
+    context_object_name = 'download_list'
+    template_name = 'pages/downloads.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        return qs.filter(downloadable=True)
+    
+
 class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView, FilterView):
     model = Score
     table_class = ScoreTable
@@ -112,6 +135,7 @@ class ScoreListView(LoginRequiredMixin, SuperuserRequiredMixin, SingleTableView,
             max = Score.objects.all().aggregate(Max('session_no'))
         else:
             max = Score.objects.filter(user=user).aggregate(Max('session_no'))
+            context['user_to_progress'] = CustomUser.objects.get(id=user)
         if not 'session_no__max' in max or max['session_no__max'] is None:
             max_sessions = 1
         else:
