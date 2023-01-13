@@ -20,10 +20,8 @@ from django_tables2 import SingleTableView
 from django_filters.views import FilterView
 from django.db.models import Max
 from django.contrib.auth.views import LoginView
+from rest_framework.permissions import AllowAny
 
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 @login_required
@@ -69,6 +67,7 @@ def register_request(request):
 class ScoreViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.RetrieveModelMixin):
     queryset = Score.objects.all()
     serializer_class = ScoreSerializer
+    permission_classes = (AllowAny,)
 
 
 class AnnouncementListView(SingleTableView):
